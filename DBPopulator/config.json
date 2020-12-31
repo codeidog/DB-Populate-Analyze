@@ -1,0 +1,8 @@
+{
+    "InternalDomains": ["rbc.com", "rbccm.com"],
+    "NumberOfWorkers":10,
+    "UsernameLength":15,
+    "DomainLength":10,
+    "RoomIDLength":40,
+    "LocalUserProbability": 50
+}

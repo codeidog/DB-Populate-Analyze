@@ -31,12 +31,17 @@ class RoomGenerator():
         self.config = config        
 
     def run(self, test):
+        #Connect to the database server
         engine = create_engine(db_string)
         session = create_session(engine)
+
+        #Initialize variables
         room_users_list = list()
         room_ID = Get_Random_Letter_Digits(self.config['RoomIDLength'])
         user_Count = random.randint(2, self.config['MaxUserCount'])
         local_User_Prob = self.config['LocalUserProbability'] / 100
+
+        #Creat the local user
         logging.info(f'Creating 1st local user for room {room_ID}')
         upn = Get_Random_UPN(User_Length=self.config['UsernameLength'], Domain_List=self.config['InternalDomains'])
         room_User = RoomUsers(room_id = room_ID, upn=upn)
@@ -44,6 +49,7 @@ class RoomGenerator():
         session.commit()
         room_users_list.append(upn)
 
+        #Add the rest of the users    
         logging.info(f'Creating additonal {user_Count -1} users for room {room_ID}')
         for i in range(user_Count - 1):
             if(random.random() <= local_User_Prob):
@@ -62,6 +68,8 @@ class RoomGenerator():
         engine.dispose()
     
     def Generate_Messgaes(self, roomID:str, users_list:list, session: session.Session) -> list:
+        """Create fake messages for random users in the users list and add to the table of the session"""
+        
         messageCount = self.config['NumberOfMessages']
         messages_list = list()
         logging.debug(f'Messgae count for room {roomID}:{messageCount}')

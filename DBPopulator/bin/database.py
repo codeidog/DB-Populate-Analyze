@@ -5,31 +5,24 @@ from sqlalchemy.ext.declarative import declarative_base
 import os
 import datetime
 
-db_server = os.environ['DB_SERVER']
-db_name = os.environ['DB_NAME']
-db_user = os.environ['DB_USER']
-db_pwd = os.environ['DB_PWD']
-db_string = f'postgresql://{db_user}:{db_pwd}@{db_server}/{db_name}'
-
-
-engine = create_engine(db_string)
+#db_server = os.environ['DB_SERVER']
+#db_name = os.environ['DB_NAME']
+#db_user = os.environ['DB_USER']
+#db_pwd = os.environ['DB_PWD']
 Base = declarative_base()
 
 
-def create_tables():
+def create_tables(engine):
     Base.metadata.create_all(engine)
 
 
-def drop_tables():
+def drop_tables(engine):
     Base.metadata.drop_all(engine)
 
 
-def create_session():
+def create_session(engine):
     return Session(bind=engine)
     
-
-def _get_date():
-    return datetime.datetime.now()
 
 class ApiContent(Base):
     __tablename__ = 'API_CONTENT'

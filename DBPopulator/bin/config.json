@@ -1,7 +1,7 @@
 {    
     "InternalDomains": ["rbc.com", "rbccm.com"],
-    "NumberOfRooms":10,
-    "NumberOfMessages": 5,
+    "NumberOfRooms":200,
+    "NumberOfMessages": 10,
     "UsernameLength":15,
     "DomainLength":10,
     "RoomIDLength":40,

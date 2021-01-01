@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+    db:
+        build: 
+            context: ./DB
+            dockerfile: ./Dockerfile
+        image: 'detectordb:1'        
+        env_file: 'popper.env'
+        environment: 
+            - POSTGRES_PASSWORD=password
+        ports: 
+            - 5432:5432
+    dbpopulator:
+        build:
+            context: ./DBPopulator
+            dockerfile: Dockerfile
+        image: 'dbpopulator:1'
+        env_file: 'popper.env'        
+        depends_on:
+            - db
+        command: '--debug'        
+    
+    #ui:
+    #    build:
+    #        context: ./WebUI
+    #        dockerfile: Dockerfile
+    #    image: 'detectorui:1'
+    #    env_file: 'minidetector.env'
+    #    environment:
+    #        - DB_SERVER=db            
+    #    depends_on:
+    #        - db
+    #    ports: 
+    #        - 80:8080
+    #    command: "--debug"
